@@ -10,6 +10,7 @@ int main(int argc, char **argv){
   
   int i,N,j;
   Stack s;
+  char a;
   s.top=NULL;
   s.size=0;
   //NodePtr top=NULL;
@@ -21,8 +22,8 @@ int main(int argc, char **argv){
         case '{': //ใส่รวบทีเดียว
         case '[': push(&s,argv[i][j]); 
                   break;
-        case '}': if(pop(&s)!='{') N=1; break;
-        case ']': if(pop(&s)!='[') N=1; break;
+        case '}': a=pop(&s); if(a!='{') {if(a=='[') N=1; else N=2;} break;
+        case ']': a=pop(&s); if(a!='[') {if(a=='{') N=1; else N=2;} break;
       }
       if(N==1) break;
     }
@@ -31,6 +32,10 @@ int main(int argc, char **argv){
       pop_all(&s);
     }
     else if(N==0) printf("argv %d: Correct\n",i);
+    else if(N==2) {
+      printf("argv %d: Incorrect too many close parenthesis\n",i);
+       pop_all(&s);
+      }
     else printf("argv %d: Incorrect mismatch \n",i);
     }
    /*for(i=1;i<argc;i++) {
