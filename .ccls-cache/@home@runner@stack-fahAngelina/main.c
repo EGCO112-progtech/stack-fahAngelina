@@ -8,7 +8,7 @@
 
 int main(int argc, char **argv){
   
-  int i,N,j;
+  int i,N,j,n;
   Stack s;
   s.top=NULL;
   s.size=0;
@@ -20,14 +20,27 @@ int main(int argc, char **argv){
           switch(argv[i][j]){
         case '{': //ใส่รวบทีเดียว
         case '[': push(&s,argv[i][j]); 
-                  N=1;
+                  n=1;
                   break;
         case '}': N=2; if(pop(&s)!='{') N=3; break;
         case ']': N=2; if(pop(&s)!='[') N=3; break;
+        default : printf("Not in the condition");
       }
-      if(N==2 || N==3) break;
+      if(N==2) break;
     }
-    
+
+    if(N==0 && (strlen(argv[i])%2 ==0)) printf("argv %d: Correct\n",i);
+    else if(N==2){
+      printf("argv %d: Incorrect too many close parenthesis\n",i);
+      pop_all(&s);
+    }
+    else if(n==1){
+      printf("argv %d: Incorrect too many open parenthesis\n",i);
+      pop_all(&s);
+    }
+    else if(N==2 && n==1 && (strlen(argv[i])%2 ==0)){
+      printf("argv %d: Incorrect mismatch \n",i);
+    }
     /*
     if(s.size>0){
       printf("argv %d: Incorrect too many open parenthesis\n",i);
@@ -69,10 +82,10 @@ int main(int argc, char **argv){
         Use stack to help with the parentheses
 
 
-     }
+     }*/
 
 
-  }*/
+  }
 
 
 
