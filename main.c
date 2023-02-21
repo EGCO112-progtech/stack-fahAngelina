@@ -21,13 +21,12 @@ int main(int argc, char **argv){
         case '{': //ใส่รวบทีเดียว
         case '[': push(&s,argv[i][j]); 
                   break;
-        case '}': N=3; a=pop(&s); if(a!='{') N=1; else if(a) break;
-        case ']': N=3; a=pop(&s); if(a!='[') N=1; else if(a) break;
+        case '}': a=pop(&s); if(a!='{') {if(a=='[') N=1; else N=2;} break;
+        case ']': a=pop(&s); if(a!='[') {if(a=='{') N=1; else N=2;} break;
         default : printf("Not in the condition");
-          
-        if(j==0 && N==3) break;
+        
       }
-      
+      if(N==1) break;
     }
 /*
     if(N==0 && (strlen(argv[i])%2 ==0)) printf("argv %d: Correct\n",i);
@@ -52,9 +51,9 @@ int main(int argc, char **argv){
       printf("argv %d: Incorrect too many close parenthesis\n",i);
        pop_all(&s);
       }
-    else printf("argv %d: Incorrect mismatch \n",i);
-    }
-  /*
+    else if(N==1) printf("argv %d: Incorrect mismatch \n",i);
+   /* }
+  
    for(i=1;i<argc;i++) {
      push(&s,atoi(argv[i]));
    }
