@@ -8,7 +8,7 @@
 
 int main(int argc, char **argv){
   
-  int i,N,j,n;
+  int i,N,j,a;
   Stack s;
   s.top=NULL;
   s.size=0;
@@ -20,15 +20,16 @@ int main(int argc, char **argv){
           switch(argv[i][j]){
         case '{': //ใส่รวบทีเดียว
         case '[': push(&s,argv[i][j]); 
-                  n=1;
                   break;
-        case '}': N=2; if(pop(&s)!='{') N=3; break;
-        case ']': N=2; if(pop(&s)!='[') N=3; break;
+        case '}': N=3; a=pop(&s); if(a!='{') N=1; else if(a) break;
+        case ']': N=3; a=pop(&s); if(a!='[') N=1; else if(a) break;
         default : printf("Not in the condition");
+          
+        if(j==0 && N==3) break;
       }
-      if(N==2) break;
+      
     }
-
+/*
     if(N==0 && (strlen(argv[i])%2 ==0)) printf("argv %d: Correct\n",i);
     else if(N==2){
       printf("argv %d: Incorrect too many close parenthesis\n",i);
@@ -41,7 +42,7 @@ int main(int argc, char **argv){
     else if(N==2 && n==1 && (strlen(argv[i])%2 ==0)){
       printf("argv %d: Incorrect mismatch \n",i);
     }
-    /*
+    */
     if(s.size>0){
       printf("argv %d: Incorrect too many open parenthesis\n",i);
       pop_all(&s);
@@ -53,6 +54,7 @@ int main(int argc, char **argv){
       }
     else printf("argv %d: Incorrect mismatch \n",i);
     }
+  /*
    for(i=1;i<argc;i++) {
      push(&s,atoi(argv[i]));
    }
